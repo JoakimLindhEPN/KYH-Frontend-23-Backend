@@ -45,6 +45,7 @@ input {
   padding: .3rem;
   cursor: pointer;
   border-bottom: 1px solid #cbd0d4;
+  gap: 2rem;
 }
 .contact:last-child {
   border: none;
@@ -54,6 +55,7 @@ input {
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 1px;
+  flex: 1;
 }
 .del-btn {
   border: none;

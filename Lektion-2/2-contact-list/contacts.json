@@ -1,7 +1,62 @@
 [
   {
+    "id": "lkansflksdanfklsdfspöfkwe",
     "firstName": "Joakim",
     "lastName": "Lindh",
     "phoneNumber": "070 123 45 67"
+  },
+  {
+    "id": "a3d04ccd-accf-4424-a88a-869afbaa4173",
+    "firstName": "Hans",
+    "lastName": "Mattin-Lassei",
+    "phoneNumber": "123456789"
+  },
+  {
+    "id": "0ef25ab5-9922-4e75-be65-3701d100270d",
+    "firstName": "Nisse",
+    "lastName": "Karlsson pyssling",
+    "phoneNumber": "908765432"
+  },
+  {
+    "id": "62c5266e-c099-4711-a168-d1044c00aecd",
+    "firstName": "test",
+    "lastName": "asds",
+    "phoneNumber": "12345"
+  },
+  {
+    "id": "7645d58d-d053-43f3-aef4-dfe2df03d6f0",
+    "firstName": "hgfds",
+    "lastName": "asda",
+    "phoneNumber": "234534"
+  },
+  {
+    "id": "088f51e9-e73f-468c-bb26-0c80106c10a1",
+    "firstName": "hgfds",
+    "lastName": "asda",
+    "phoneNumber": "234534"
+  },
+  {
+    "id": "24ee2774-d21b-4e72-9ebc-74fe77a3f3ca",
+    "firstName": "hgfds",
+    "lastName": "asda",
+    "phoneNumber": "234534"
+  },
+  {
+    "id": "f220b0de-0674-4c63-b430-186bac7119dc",
+    "firstName": "hgfds",
+    "lastName": "asda",
+    "phoneNumber": "234534"
+  },
+  {
+    "id": "75304ab2-8079-4d8d-91b1-940c87218298",
+    "firstName": "hgfds",
+    "lastName": "asda",
+    "phoneNumber": "234534"
+  },
+  {
+    "id": "d218679d-53ea-4afd-a0e8-b30cc3fd0b5f",
+    "firstName": "hgfds",
+    "lastName": "asda",
+    "phoneNumber": "234534"
   }
 ]
