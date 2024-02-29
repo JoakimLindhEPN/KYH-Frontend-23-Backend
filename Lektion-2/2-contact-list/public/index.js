@@ -49,7 +49,8 @@ const addContact = async (contact) => {
   contacts.push(data)
 }
 
-document.querySelector('#addContactForm').addEventListener('submit', async (e) => {
+const form = document.querySelector('#addContactForm')
+form.addEventListener('submit', async (e) => {
   e.preventDefault()
 
   const firstNameValue = document.querySelector('#firstName').value.trim()
@@ -63,6 +64,6 @@ document.querySelector('#addContactForm').addEventListener('submit', async (e) =
     lastName: lastNameValue,
     phoneNumber: phoneValue
   })
-
+  form.reset()
   listContacts()
 })
