@@ -7,6 +7,7 @@ const prisma = new PrismaClient()
 
 
 let mainWindow = null;
+let editWindow = null;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -24,6 +25,22 @@ const createWindow = () => {
 
 
 app.whenReady().then(() => {
+
+  ipcMain.handle('openEditWindow', async (_, contact) => {
+    editWindow = new BrowserWindow({
+      width: 400,
+      height: 400,
+      title: 'Contact List',
+      webPreferences: {
+        preload: path.join(__dirname, 'preload.js')
+      }
+    })
+  
+    await mainWindow.loadFile('src/edit.html')
+
+    // TDB Skicka contact till edit window
+  })
+
   
   ipcMain.handle('getAll', async () => {
     try {
@@ -36,9 +53,30 @@ app.whenReady().then(() => {
     }
   })
 
+  ipcMain.handle('add', async (_, data) => {
+    try {
 
+      const contact = await prisma.contact.create({
+        data
+      })
+      return contact
 
+    } catch (err) {
+      console.log(err)
+    }
+  })
 
+  ipcMain.handle('delete', async (_, id) => {
+    try {
+      const contact = await prisma.contact.delete({
+        where: { id }
+      })
+      return contact
+
+    } catch (err) {
+      console.log(err)
+    }
+  })
 
 
 
