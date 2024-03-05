@@ -9,4 +9,7 @@ contextBridge.exposeInMainWorld('contacts', {
 
 contextBridge.exposeInMainWorld('edit', {
   open: (contact) => ipcRenderer.invoke('openEditWindow', contact),
+  newContact: (cb) => ipcRenderer.on('newContact', cb),
+  editContact: (contact) => ipcRenderer.invoke('editContact', contact),
+  contactEdited: (cb) => ipcRenderer.on('contactEdited', cb)
 })

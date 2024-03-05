@@ -26,6 +26,21 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
 
+  ipcMain.handle('editContact', async (_, contact) => {
+    try {
+
+      const updatedContact = await prisma.contact.update({
+        where: { id: contact.id },
+        data: contact
+      })
+
+      mainWindow.webContents.send('contactEdited', updatedContact)
+      editWindow.close()
+    } catch (err) {
+      console.log(err)
+    }
+  })
+
   ipcMain.handle('openEditWindow', async (_, contact) => {
     editWindow = new BrowserWindow({
       width: 400,
@@ -36,9 +51,10 @@ app.whenReady().then(() => {
       }
     })
   
-    await mainWindow.loadFile('src/edit.html')
-
+    await editWindow.loadFile('src/edit.html')
+    // editWindow.webContents.openDevTools()
     // TDB Skicka contact till edit window
+    editWindow.webContents.send('newContact', contact)
   })
 
   

@@ -19,7 +19,7 @@ body {
   border-radius: .5rem;
 }
 
-#addContactForm {
+#addContactForm, #editForm {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -81,4 +81,8 @@ input {
   color: firebrick;
   font-size: .8rem;
   display: none;
+}
+
+.edit {
+  padding: 1rem;
 }

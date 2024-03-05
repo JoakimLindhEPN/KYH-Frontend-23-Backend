@@ -67,16 +67,26 @@ document.querySelector('#addContactForm').addEventListener('submit', async (e) =
   const firstName = first.value.trim()
   const lastName = last.value.trim()
   const phoneNumber = phone.value.trim()
-  
+
+  const phoneRegex = /^\d{10}$/
+
   if(firstName === '' || lastName === '' || phoneNumber === '') {
+    formError.innerText = 'Please enter all the fields'
     formError.style.display = 'block'
     return
   }
 
+  if(!phoneRegex.test(phoneNumber)) {
+    formError.innerText = 'Phone number not valid'
+    formError.style.display = 'block'
+    return
+  }
+
+  let formattedNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d{2})(\d{2})/, "$1 $2 $3 $4")
   const contact = {
     firstName,
     lastName,
-    phoneNumber
+    phoneNumber: formattedNumber
   }
 
   const res = await window.contacts.add(contact)
@@ -87,4 +97,14 @@ document.querySelector('#addContactForm').addEventListener('submit', async (e) =
 
   _contacts.push(res)
   output.append(createContactElement(res))
+})
+
+// Listen for contact edited 
+window.edit.contactEdited((e, updatedContact) => {
+  const contact = _contacts.find(c => c.id === updatedContact.id)
+  contact.firstName = updatedContact.firstName
+  contact.lastName = updatedContact.lastName
+  contact.phoneNumber = updatedContact.phoneNumber
+
+  listContacts()
 })
