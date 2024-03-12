@@ -27,7 +27,10 @@
   padding-left: 1rem;
   overflow-y: scroll;
 }
-
+#me {
+  text-transform: capitalize;
+  font-weight: bold;
+}
 .messages {
   flex: 1;
   background-color: var(--clr-chat-bg);
