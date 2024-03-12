@@ -1,9 +1,16 @@
 const socket = io();
+// import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "https://cdn.skypack.dev/date-fns";
+const messages = document.querySelector('.messages');
+const chatForm = document.querySelector('#chatForm');
+const chatMessage = document.querySelector('#chatMessage');
+const feedback = document.querySelector('#feedback');
+const chat = document.querySelector('.chat');
+
 
 const userName = new URLSearchParams(window.location.search).get('username')
 document.querySelector('#me').innerText = userName;
 
-const messages = document.querySelector('.messages');
 
 
 
@@ -20,6 +27,25 @@ socket.on('new_user_connection', (feedbackString) => {
   messages.appendChild(createElement('p', 'inline-feedback', feedbackString))
 })
 
+// När någon har skickat ett meddelande
+socket.on('new_message', message => {
+  // Bygg ihop ett meddelande
+  const message_div = createElement('div', 'single-message')
+  if(message.id === socket.id) message_div.classList.add('right')
+  const messageName_p = createElement('p', 'single-message__name', message.userName)
+  const msg_p = createElement('p', 'single-message__msg', message.message)
+
+  const time_p = createElement('p', 'timestamp', formatDistanceToNow(message.createdAt))
+  
+  setInterval(() => {
+    time_p.innerText = formatDistanceToNow(message.createdAt)
+  }, 60000)
+
+  message_div.append(time_p, messageName_p, msg_p)
+
+  // Lägger till meddelandet i chaten
+  messages.append(message_div)
+})
 
 
 
@@ -33,8 +59,22 @@ socket.on('new_user_connection', (feedbackString) => {
 
 
 
+// SUBMIT
+chatForm.addEventListener('submit', e => {
+  e.preventDefault()
 
+  if(chatMessage.value.trim() === '') return
 
+  socket.emit('message', {
+    id: socket.id,
+    message: chatMessage.value,
+    userName,
+    createdAt: Date.now()
+  })
+
+  chatMessage.value = ''
+  chatMessage.focus()
+})
 
 
 

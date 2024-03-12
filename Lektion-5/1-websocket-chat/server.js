@@ -25,4 +25,9 @@ io.on('connection', socket => {
     socket.broadcast.emit('new_user_connection', `${userName} has entered the chat`)
   })
 
+  socket.on('message', message => {
+    // message.createdAt = Date.now()
+    io.emit('new_message', message)
+  })
+
 })
