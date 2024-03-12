@@ -25,6 +25,7 @@ socket.on('connect', () => {
 socket.on('new_user_connection', (feedbackString) => {
   // messages.innerHTML += `<p class="inline-feedback">${feedbackString}</p>`
   messages.appendChild(createElement('p', 'inline-feedback', feedbackString))
+  chat.scrollTop = chat.scrollHeight
 })
 
 // När någon har skickat ett meddelande
@@ -36,7 +37,7 @@ socket.on('new_message', message => {
   const msg_p = createElement('p', 'single-message__msg', message.message)
 
   const time_p = createElement('p', 'timestamp', formatDistanceToNow(message.createdAt))
-  
+
   setInterval(() => {
     time_p.innerText = formatDistanceToNow(message.createdAt)
   }, 60000)
@@ -45,6 +46,20 @@ socket.on('new_message', message => {
 
   // Lägger till meddelandet i chaten
   messages.append(message_div)
+  chat.scrollTop = chat.scrollHeight
+})
+
+// någon skriver ett meddelade
+socket.on('typing', data => {
+  feedback.classList.remove('d-none')
+  feedback.innerText = `${data} is typing...`
+
+  // Om personen slutar skriva så tar vi bort statusen efter 5 sekunder
+  setTimeout(() => {
+    feedback.classList.add('d-none')
+    feedback.innerText = ''
+  }, 5000)
+  chat.scrollTop = chat.scrollHeight
 })
 
 
@@ -52,12 +67,11 @@ socket.on('new_message', message => {
 
 
 
-
-
-
-
-
-
+chatMessage.addEventListener('keyup', () => {
+  if(chatMessage.value.length > 0) {
+    socket.emit('typing', userName)
+  }
+})
 
 // SUBMIT
 chatForm.addEventListener('submit', e => {
