@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 
-const todoSchema = Schema({
+const todoSchema = new Schema({
   title: {
     type: String,
     required: [true, 'You need to enter something todo']

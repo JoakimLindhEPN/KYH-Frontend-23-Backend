@@ -83,7 +83,27 @@ export const updateTodo = async (req, res) => {
  * Takes an id and deletes a todo on the databsae
  */
 export const deleteTodo = async (req, res) => {
-  res.status(200).json({
-    message: 'delete'
-  })
+  try {
+
+    const id = req.params.id
+    if(!mongoose.isValidObjectId(id)) {
+      res.status(400)
+      throw new Error('You need to provide a valid ObjectId')
+    }
+
+    const todo = await Todo.findByIdAndDelete(id)
+
+    if(!todo) {
+      res.status(404)
+      throw new Error('Resource not found')
+    }
+
+    res.status(200).json( todo._id )
+
+  } catch (err) {
+    res.json({ 
+      message: err.message,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : null
+    })
+  }
 }

@@ -18,7 +18,7 @@ router.get('/', getTodos)
 
 // Update
 router.put('/:id', updateTodo)
-// router.patch()
+router.patch('/:id', updateTodo)
 
 // Delete
 router.delete('/:id', deleteTodo)
