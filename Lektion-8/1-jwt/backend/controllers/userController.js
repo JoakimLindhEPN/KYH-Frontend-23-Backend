@@ -15,7 +15,7 @@ router.post('/login', loginUser)
 
 // TODO: protect
 router.get('/profile', verifyToken, getUserProfile)
-router.put('/profile', updateUserProfile)
+router.put('/profile', verifyToken, updateUserProfile)
 
 
 export default router;

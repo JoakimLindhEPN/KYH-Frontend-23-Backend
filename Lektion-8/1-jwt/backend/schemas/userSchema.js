@@ -21,7 +21,7 @@ const userSchema = new Schema({
     required: true
   }
 
-})
+}, { timestamps: true })
 
 userSchema.virtual('displayName').get(function() {
   return this.firstName + ' ' + this.lastName
