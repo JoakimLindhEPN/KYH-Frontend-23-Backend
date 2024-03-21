@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 const userSchema = new Schema({
 
@@ -24,6 +25,15 @@ const userSchema = new Schema({
 
 userSchema.virtual('displayName').get(function() {
   return this.firstName + ' ' + this.lastName
+})
+
+userSchema.pre("save", async function(next) {
+  if(!this.isModified('passwordHash')) {
+    next();
+  }
+
+  const salt = await bcrypt.genSalt(15)
+  this.passwordHash = await bcrypt.hash(this.passwordHash, salt)
 })
 
 
