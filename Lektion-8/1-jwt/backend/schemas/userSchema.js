@@ -27,6 +27,13 @@ userSchema.virtual('displayName').get(function() {
   return this.firstName + ' ' + this.lastName
 })
 
+// matchar lösenordet som skikats in med hashningen på databasen
+userSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.passwordHash)
+}
+
+
+// Krypterar lösenordet varje gång en user sparas, om lösenordet har ändrats eller är en ny user
 userSchema.pre("save", async function(next) {
   if(!this.isModified('passwordHash')) {
     next();
@@ -35,8 +42,6 @@ userSchema.pre("save", async function(next) {
   const salt = await bcrypt.genSalt(15)
   this.passwordHash = await bcrypt.hash(this.passwordHash, salt)
 })
-
-
 
 
 const User = model('User', userSchema)

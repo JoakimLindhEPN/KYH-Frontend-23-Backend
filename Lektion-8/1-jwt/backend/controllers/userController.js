@@ -7,13 +7,14 @@ import {
   getUserProfile,
   updateUserProfile
 } from '../models/userModel.js'
+import { verifyToken } from '../middleware/authMiddleware.js'
 
 // Routes
 router.post('/register', registerUser)
 router.post('/login', loginUser)
 
 // TODO: protect
-router.get('/profile', getUserProfile)
+router.get('/profile', verifyToken, getUserProfile)
 router.put('/profile', updateUserProfile)
 
 
