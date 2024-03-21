@@ -7,6 +7,7 @@ import PublicLayout from './layouts/PublicLayout'
 import AuthLayout from './layouts/AuthLayout'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import HomePage from './pages/HomePage'
 
 
 const router = createBrowserRouter([
@@ -17,7 +18,12 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <PublicLayout />,
-
+        children: [
+          {
+            index: true,
+            element: <HomePage />
+          }
+        ]
       },
 
       {

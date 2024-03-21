@@ -46,16 +46,57 @@ const AuthContextProvider = ({ children }) => {
         body: JSON.stringify(formData)
       })
 
-      console.log(res)
+      const data = await res.json()
+      console.log({res, data})
+      if(res.status !== 201) {
+        return { error: data.message }
+      }
+
+      setUser(data)
+      setToken(data.token)
+      localStorage.setItem('token', data.token)
+      return { success: true }
     } catch (err) {
-      console.log(err.data.message || err.error)
+      return { error: err.message }
     }
+  }
+  const login = async (formData) => {
+    try {
+      const res = await fetch('http://localhost:8000/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const data = await res.json()
+      console.log({res, data})
+      if(res.status !== 200) {
+        return { error: data.message }
+      }
+
+      setUser(data)
+      setToken(data.token)
+      localStorage.setItem('token', data.token)
+      return { success: true }
+    } catch (err) {
+      return { error: err.message }
+    }
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    setToken(null)
+    setUser(null)
   }
 
   const value = {
     token,
     user,
-    register
+    register,
+    login,
+    logout
   }
 
   return (

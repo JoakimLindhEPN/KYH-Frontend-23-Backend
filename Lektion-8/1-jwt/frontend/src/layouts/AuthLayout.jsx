@@ -1,11 +1,15 @@
 import { useEffect } from "react"
-import { Outlet } from "react-router-dom"
-
+import { Outlet, useNavigate } from "react-router-dom"
+import { useAuth } from '../contexts/authContext'
 function AuthLayout() {
 
+  const { user } = useAuth()
+  const navigate = useNavigate()
   useEffect(() => {
-    // kolla om vi är inloggade och redidrect om vi är det.
-  }, [])
+    if(user) {
+      navigate('/')
+    }
+  }, [user])
 
   return (
     <div className="h-screen flex items-center justify-center">
