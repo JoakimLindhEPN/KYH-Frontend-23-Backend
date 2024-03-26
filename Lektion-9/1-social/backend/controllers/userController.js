@@ -1,7 +1,7 @@
-import User from '../models/userSchema'
+import User from '../models/userSchema.js'
 import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcryptjs'
-import generateToken from '../helpers/generateToken';
+import generateToken from '../helpers/generateToken.js';
 
 
 const register = asyncHandler(async (req, res) => {
@@ -77,7 +77,7 @@ const login = asyncHandler(async (req, res) => {
 
 })
 const logout = asyncHandler(async (req, res) => {
-  res.cookie('jwt-token', '', {
+  res.cookie('jwtToken', '', {
     httpOnly: true,
     expires: new Date(0)
   })
