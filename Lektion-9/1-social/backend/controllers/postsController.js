@@ -25,7 +25,23 @@ const createPost = asyncHandler(async (req, res) => {
 })
 
 const getAll = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).populate('user', 'username')
+  const posts = await Post.find({})
+    .populate('user', 'username')
+    .populate({
+      path: 'likes',
+      populate: {
+        path: 'user',
+        select: 'username'
+      }
+    })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'username'
+      }
+    })
+    
   res.status(200).json(posts)
 })
 
@@ -59,9 +75,21 @@ const editPost = asyncHandler(async (req, res) => {
   res.status(200).json(updatedPost)
 })
 
+const removePost = asyncHandler(async (req, res) => {
+  const post = await Post.findOneAndDelete({ _id: req.params.id, user: req.userId })
+
+  if(!post) {
+    res.status(404)
+    throw new Error('could not find the post')
+  }
+
+  res.status(200).json(post)
+})
+
 export {
   createPost,
   getAll,
   getUserOwnPosts,
-  editPost
+  editPost,
+  removePost
 }
