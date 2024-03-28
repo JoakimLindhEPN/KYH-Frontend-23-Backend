@@ -1,10 +1,18 @@
 import { FullscreenLoader } from "@/components/fullscreen-loader"
 import { useAuth } from "@/contexts/authContext"
-import { Outlet } from "react-router-dom"
+import { useEffect } from "react"
+import { Outlet, useNavigate } from "react-router-dom"
 
 function AuthLayout() {
 
-  const { authLoaded } = useAuth()
+  const { authLoaded, user } = useAuth()
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    if(authLoaded && user) {
+      navigate('/')
+    }
+  }, [user, authLoaded])
 
   if(!authLoaded) return <FullscreenLoader />
 
