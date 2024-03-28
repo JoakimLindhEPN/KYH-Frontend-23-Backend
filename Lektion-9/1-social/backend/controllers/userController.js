@@ -85,8 +85,21 @@ const logout = asyncHandler(async (req, res) => {
   res.status(200).json({ message: 'Logged out' })
 })
 
+const getUserData = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.userId).select('-password')
+
+  if(!user) {
+    res.status(404)
+    throw new Error('No user found')
+  }
+
+  res.status(200).json(user)
+
+})
+
 export {
   register,
   login,
-  logout
+  logout,
+  getUserData
 }
