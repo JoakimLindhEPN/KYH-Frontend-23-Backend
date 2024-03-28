@@ -50,12 +50,51 @@ const PostsContextProvider = ({ children }) => {
      await reload()
   }
 
+  const addPost = async (post) => {
+
+    try {
+      const res = await fetch('/api/posts', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(post)
+      })
+  
+      const data = await res.json()
+      if(res.status !== 201) {
+        return { error: data.message }
+      }
+
+      reload()
+      return { success: 'Post added' }
+    } catch (err) {
+      return { error: err.message }
+    }
+
+  }
+
+  const addComment = async (postId, text) => {
+    const res = await fetch('/api/comment/' + postId, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ text })
+    })
+
+    if(res.ok)
+     await reload()
+  }
+
   const value = {
     posts, 
     loading,
     error,
     getPosts,
-    likePost
+    likePost,
+    addComment,
+    addPost
   }
 
   return (
