@@ -12,6 +12,10 @@ const errorHandler = (err, req, res, next) => {
     statusCode = 404;
     message = 'Resource not found!'
   }
+
+  if(err.message === 'Unauthenticated') {
+    statusCode = 401
+  }
   
   res.status(statusCode).json({ 
     message,

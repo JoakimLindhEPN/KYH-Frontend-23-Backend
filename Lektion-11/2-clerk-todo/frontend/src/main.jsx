@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './index.css'
 import RootLayout from './layouts/root-layout'
-import MainLayout from './layouts/main-layout'
 import IndexPage from './pages'
 import AuthLayout from './layouts/auth-layout'
 import SignInPage from './pages/sign-in'
 import SignUpPage from './pages/sign-up'
-import TestPage from './pages/test-page'
 
 const router = createBrowserRouter([
   {
@@ -16,17 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <MainLayout />,
-        children: [
-          {
-            index: true,
-            element: <IndexPage />
-          },
-          {
-            path:'test',
-            element: <TestPage />
-          },
-        ]
+        element: <IndexPage />
       },
       {
         path: 'auth',
